@@ -29,7 +29,7 @@
 <meta property="og:image" content="http://yoursite.com/2019/04/15/理解各种各样的CNN架构/DenseNet-B.png">
 <meta property="og:image" content="http://yoursite.com/2019/04/15/理解各种各样的CNN架构/FC-DenseNet.png">
 <meta property="og:image" content="http://yoursite.com/2019/04/15/理解各种各样的CNN架构/densenet-arch.png">
-<meta property="og:updated_time" content="2019-07-15T13:40:40.254Z">
+<meta property="og:updated_time" content="2019-07-15T14:21:48.943Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="理解各种各样的CNN架构">
 <meta name="twitter:description" content="ResNet-Alexnet-VGG-Inception:理解各种各样的CNN架构本文翻译自ResNet、AlexNet、VGG、Inception：Understanding various architecture of Convelutional Neural Network ResNet、AlexNet、VGG、Inception：Understanding various archite">
@@ -211,7 +211,7 @@ var _hmt = _hmt || [];
 <p>卷积神经网络（CNN）在视觉识别任务上的表现令人惊奇。好的CNN网络是带有上百万参数和寻多隐藏层的“庞然怪物”。事实上，一个不好的经验规则是：网络越深，效果越好。<strong>要打破这种认知</strong></p>
 <p>AlexNet、VGG、Inception和ResNet都是最近一些流行的CNN网络。</p>
 <p>为什么这些网络表现如此只好？它们又是如何设计出来的？为什么他们设计成那样的结构？回答这些问题并不简单，但是这里我们试着去探讨上面的几个问题。</p>
-<p>网络结构设计是一个复杂的过程，需要花很多shijina</p>
+<p>网络结构设计是一个复杂的过程，需要花很多时间</p>
 <h2 id="为什么CNN模型战胜了传统计算机视觉方法？"><a href="#为什么CNN模型战胜了传统计算机视觉方法？" class="headerlink" title="为什么CNN模型战胜了传统计算机视觉方法？"></a>为什么CNN模型战胜了传统计算机视觉方法？</h2><p>图像分类指的是：给定一个图片，将其分类成预定义好的几个类别之一。图像分类的传统流程设计两个模块：<strong>特征提取和分类</strong></p>
 <p><strong>特征提取</strong>指的是从原始像素提取更高级的特征，这些特征能够捕捉到类别之间的区别。这种特征提取的方式是使用无监督方式，从像素点中提取信息时，没有使用图像的类别标。</p>
 <p>常用的传统特征包括GIST、<a href="https://baike.baidu.com/item/HOG" target="_blank" rel="noopener">HOG</a>、<a href="https://baike.baidu.com/item/SIFT/1396275?fr=aladdin" target="_blank" rel="noopener">SIFT</a>、<a href="https://baike.baidu.com/item/lbp" target="_blank" rel="noopener">LBP</a>等。特征提取后，使用图像的这些特征与其对应的类别标签训练一个分类模型。常用的分类模型有SVM、LR、随机森林及决策树等。</p>
