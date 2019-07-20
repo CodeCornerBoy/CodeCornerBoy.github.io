@@ -29,7 +29,7 @@
 <meta property="og:image" content="http://yoursite.com/2019/04/15/理解各种各样的CNN架构/DenseNet-B.png">
 <meta property="og:image" content="http://yoursite.com/2019/04/15/理解各种各样的CNN架构/FC-DenseNet.png">
 <meta property="og:image" content="http://yoursite.com/2019/04/15/理解各种各样的CNN架构/densenet-arch.png">
-<meta property="og:updated_time" content="2019-07-15T14:21:48.943Z">
+<meta property="og:updated_time" content="2019-07-15T14:23:21.574Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="理解各种各样的CNN架构">
 <meta name="twitter:description" content="ResNet-Alexnet-VGG-Inception:理解各种各样的CNN架构本文翻译自ResNet、AlexNet、VGG、Inception：Understanding various architecture of Convelutional Neural Network ResNet、AlexNet、VGG、Inception：Understanding various archite">
@@ -219,7 +219,7 @@ var _hmt = _hmt || [];
 <p>特征提取不能根据图像及其标签进行调整。如果选择的特征缺乏一定的代表性来区分各个类别，模型的准确度就会大打折扣，而无论采取什么样的分类策略。</p>
 <p>采用传统的流程，目前的一个比较好的方法是使用多种特征提取器，然后组合他们得到一种更好的特征（组合特征）。</p>
 <p>但是这需要很多<code>启发式规则</code>和人力来根据领域的不同来调整参数，使得达到一个很好的准确度，这里说的是要接近人类的水平。</p>
-<p>这也就是说，为什么采用传统的计算机视觉技术需要花费很多年时间才能打造出一个好的计算机视觉系统（例如：OCR、人脸验证、图像识别、物体检测），浙西系统在实际应用中可以处理各种数据。</p>
+<p>这也就是说，为什么采用传统的计算机视觉技术需要花费很多年时间才能打造出一个好的计算机视觉系统（例如：OCR、人脸验证、图像识别、物体检测），这些系统在实际应用中可以处理各种数据。</p>
 <p>有一次，我们用了6周时间为一家公司打造了一个CNN模型，其效果更好，如果采用传统的计算机视觉技术要达到同样效果则要花费一年时间。</p>
 <p><strong>传统流程的另一个问题是：</strong></p>
 <p>它与人类识别学习物体的过程是完全不一样的。人自出生之初，一个孩子就可以感知周围环境，随着他的成长，他接触的数据更多，从而学会了识别物体。</p>
@@ -446,6 +446,15 @@ var _hmt = _hmt || [];
   
 <nav id="article-nav">
   
+    <a href="/2019/04/23/深度学习中的优化/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          深度学习中的优化
+        
+      </div>
+    </a>
+  
   
     <a href="/2018/07/11/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
       <div class="article-nav-title">Hello World</div>
@@ -613,6 +622,10 @@ MathJax.Hub.Queue(function() {
             <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
           </label>
           <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">optimizer deeplearning</a>
+              </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">CNN arch deeplearning</a>

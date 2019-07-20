@@ -6,15 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives: 2019 | Hexo</title>
+  <title>深度学习中的优化 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/archives/2019/index.html">
+  <meta name="description" content="1.前言针对深度学习中不同的优化问题和应用场景，研究人员提出了多种不同的求解算法。在众多优化算法中，有几个经典常用的优化值得被牢记，主要是几个一阶的梯度的算法，包括GD，SGD，Momentum，AdaGrad，RMSProp，Adam。其中SGD，Momentum是需要事先人工设置学习率，而AdaGrad，RMSProp，Adam是自动调节学习率的。  2.GD(gradient descent">
+<meta name="keywords" content="optimizer deeplearning">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深度学习中的优化">
+<meta property="og:url" content="http://yoursite.com/2019/04/23/深度学习中的优化/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="1.前言针对深度学习中不同的优化问题和应用场景，研究人员提出了多种不同的求解算法。在众多优化算法中，有几个经典常用的优化值得被牢记，主要是几个一阶的梯度的算法，包括GD，SGD，Momentum，AdaGrad，RMSProp，Adam。其中SGD，Momentum是需要事先人工设置学习率，而AdaGrad，RMSProp，Adam是自动调节学习率的。  2.GD(gradient descent">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-07-20T08:14:14.999Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
+<meta name="twitter:title" content="深度学习中的优化">
+<meta name="twitter:description" content="1.前言针对深度学习中不同的优化问题和应用场景，研究人员提出了多种不同的求解算法。在众多优化算法中，有几个经典常用的优化值得被牢记，主要是几个一阶的梯度的算法，包括GD，SGD，Momentum，AdaGrad，RMSProp，Adam。其中SGD，Momentum是需要事先人工设置学习率，而AdaGrad，RMSProp，Adam是自动调节学习率的。  2.GD(gradient descent">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -166,36 +171,123 @@ var _hmt = _hmt || [];
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-深度学习中的优化" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/04/23/深度学习中的优化/" class="archive-article-date">
-  	<time datetime="2019-04-23T15:06:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-23</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/04/23/深度学习中的优化/">深度学习中的优化</a>
+    <h1 class="article-title" itemprop="name">
+      深度学习中的优化
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2019/04/23/深度学习中的优化/" class="archive-article-date">
+  	<time datetime="2019-04-23T15:06:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-23</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="1-前言"><a href="#1-前言" class="headerlink" title="1.前言"></a>1.前言</h3><p>针对深度学习中不同的优化问题和应用场景，研究人员提出了多种不同的求解算法。在众多优化算法中，有几个经典常用的优化值得被牢记，主要是几个一阶的梯度的算法，包括<strong>GD，SGD，Momentum，AdaGrad，RMSProp，Adam</strong>。其中SGD，Momentum是需要事先人工设置学习率，而AdaGrad，RMSProp，Adam是自动调节学习率的。</p>
+<hr>
+<h3 id="2-GD-gradient-descent"><a href="#2-GD-gradient-descent" class="headerlink" title="2.GD(gradient descent)"></a>2.GD(gradient descent)</h3><p>BGD在训练中，每次迭代需要使用训练集中的所有样本，也就是说利用现有参数对训练集中的所有样本的输入生成一个估计$\hat{y}_i$，然后根据实际的$y_i$作差求出平均值并以此来更新参数。</p>
+<h4 id="2-1具体实现"><a href="#2-1具体实现" class="headerlink" title="2.1具体实现"></a>2.1具体实现</h4><p>需要：学习速率$\epsilon$，初始参数$\theta$<br>迭代过程：</p>
+<ol>
+<li><p>提取训练集中所有特征${x_1,…,x_n}$，以及对应的标签$y_i$</p>
+</li>
+<li><p>计算梯度和误差并更新参数：</p>
+<p>​    $\hat{g}\leftarrow+\frac{1}{n}\nabla_{\theta}\sum_{i}L(f(x_i;\theta),y_i)$<br>​    $\theta\leftarrow\theta-\epsilon\hat{g}$</p>
+</li>
+</ol>
+<h4 id="2-2优点"><a href="#2-2优点" class="headerlink" title="2.2优点"></a>2.2优点</h4><p>由于每一步迭代使用了全部样本，因此当损失函数收敛过程比较稳定</p>
+<h4 id="2-3缺点"><a href="#2-3缺点" class="headerlink" title="2.3缺点"></a>2.3缺点</h4><p>也是由于每次迭代使用所有样本，因此随着数据集的增大，运行速度会越来越慢</p>
+<hr>
+<h3 id="3-BGD-batch-gradient-descent"><a href="#3-BGD-batch-gradient-descent" class="headerlink" title="3.BGD(batch gradient descent)"></a>3.BGD(batch gradient descent)</h3><p>批量梯度下降，即每次迭代随机抽取一批样本（全体样本的一个子集）来更新参数</p>
+<h4 id="3-1具体实现"><a href="#3-1具体实现" class="headerlink" title="3.1具体实现"></a>3.1具体实现</h4><p>需要：学习速率$\epsilon$，初始参数$\theta$<br>每次迭代过程：</p>
+<ol>
+<li>从训练集中随机抽取一批样本${x_1,…,x_m}$(其中m&lt;n),以及对应的标签$y_i$</li>
+<li>计算损失的梯度并跟新参数：<br> $\hat{g}\leftarrow+\frac{1}{m}\nabla_{\theta}\sum_{i}L(f(x_i;\theta),y_i)$<br> $\theta\leftarrow\theta-\epsilon\hat{g}$<h4 id="3-2优点"><a href="#3-2优点" class="headerlink" title="3.2优点"></a>3.2优点</h4>由于每次迭代不是使用全样本，因此训练速度快，对于很大的数据集也能以较快的速度收敛<h4 id="3-3缺点"><a href="#3-3缺点" class="headerlink" title="3.3缺点"></a>3.3缺点</h4>由于每次是随机抽取一小批样本，因此损失无法表征全局的损失趋势，计算得到的梯度也有误差<h4 id="补充一句"><a href="#补充一句" class="headerlink" title="补充一句"></a>补充一句</h4>当BGD每次仅抽取的一小批样本仅含有一个时，此时就是随机梯度下降（SGD），SGD的优点是计算速度快，缺点是损失函数曲线可能不稳定，需要更多个epoch才能收敛</li>
+</ol>
+<h3 id="4-Momentum"><a href="#4-Momentum" class="headerlink" title="4.Momentum"></a>4.Momentum</h3><p>SGD存在的问题是，当每次迭代计算梯度的时候会含有很大噪声，而Momentum方法可以较好的缓解这个问题，尤其是在面对小而连续的梯度但含有很多噪声的时候，可以更好地加快收敛。Momentum借鉴了物理学动量的概念，即前几次的梯度也会参与到本次迭代。为了表示动量，引入一个新的变量$\nu$,$\nu$是历史梯度的累加和，但是每次都会有一定衰减</p>
+<h4 id="4-1-具体实现"><a href="#4-1-具体实现" class="headerlink" title="4.1 具体实现"></a>4.1 具体实现</h4><p>需要：学习速率$\epsilon$，初始参数$\theta$，初始速率$nu$，动量衰减参数$\alpha$<br>迭代过程：</p>
+<ol>
+<li>从训练集中随机抽取一批容量为m的样本${x_1,…,x_m}$，以及对应的标签$y_i$</li>
+<li>计算损失和梯度，并更新速度$nu$，和参数$\theta$<br> $\hat{g}\leftarrow+\frac{1}{m}\nabla_{\theta}\sum_{i}L(f(x_i;\theta),y_i)$<br> $\nu\leftarrow\alpha\nu-\epsilon\hat{g}$<br> $\theta\leftarrow\theta-\epsilon\hat{g}$<br>其中参数$\alpha$表示每回合速率v的衰减程度.同时也可以推断得到,如果每次迭代得到的梯度都是g,那么最后得到的$\nu$的稳定值为$\frac{\epsilon||g||}{1-\alpha}$</li>
+</ol>
+<h4 id="4-2特点"><a href="#4-2特点" class="headerlink" title="4.2特点"></a>4.2特点</h4><p>前后梯度一致的时候能够加速学习<br>前后梯度不一致的时候能够抑制震荡，越过局部极小值</p>
+<hr>
+<h3 id="5-AdaGrad"><a href="#5-AdaGrad" class="headerlink" title="5 AdaGrad"></a>5 AdaGrad</h3><p>AdaGrad是一种可以自动改变学习速率的优化算法，只需设定一个全局学习速率$\epsilon$，每次迭代使用的学习速率是与历史梯度有关</p>
+<h4 id="5-1具体实现"><a href="#5-1具体实现" class="headerlink" title="5.1具体实现"></a>5.1具体实现</h4><p>需要：全局学习速率$\epsilon$,初始参数$\theta$，一个很小的大于0的数值稳定量$\delta$<br>中间变量：梯度累计量r<br>迭代过程：</p>
+<ol>
+<li><p>从训练集中随机抽取一批容量为m的样本${x_1,…,x_m}$，以及对应的标签$y_i$</p>
+</li>
+<li><p>计算损失和梯度，更新r，在根据r和梯度更新参数<br> $\hat{g}\leftarrow+\frac{1}{m}\nabla_{\theta}\sum_{i}L(f(x_i;\theta),y_i)$<br> $r\leftarrow r+\hat{g}\bigotimes\hat{g}$<br> $\Delta\theta=-\frac{\epsilon}{\delta+\sqrt{r}}\bigotimes\hat{g}$<br> $\theta\leftarrow\theta+\Delta\theta$</p>
+</li>
+</ol>
+<h4 id="5-2优点"><a href="#5-2优点" class="headerlink" title="5.2优点"></a>5.2优点</h4><p>能够实现学习速率的自动更改，如果本次梯度大，那么学习速率衰减的就快一些，如果本次梯度小，那么学习速率就衰减的慢一下。</p>
+<h4 id="5-3缺点"><a href="#5-3缺点" class="headerlink" title="5.3缺点"></a>5.3缺点</h4><p>依旧需要设置一个全局的学习率$\epsilon$<br>经验表明，在普通算法中或许效果不错，但是在深度学习中，深度过深时会造成训练提前结束</p>
+<hr>
+<h3 id="6-RMSProp"><a href="#6-RMSProp" class="headerlink" title="6.RMSProp"></a>6.RMSProp</h3><p>RMSProp通过引入一个衰减系数，让r每次都以一定的比例衰减，类似于Momentum中的做法</p>
+<h4 id="6-1具体实现"><a href="#6-1具体实现" class="headerlink" title="6.1具体实现"></a>6.1具体实现</h4><p>需要：全局学习速率$\epsilon$，初始参数$\theta$,一个很小的大于0的数值稳定量$\delta$，衰减速率$\rho$<br>迭代过程：</p>
+<ol>
+<li>从训练集中随机抽取一批容量为m的样本${x_1,…,x_m}$，以及对应的标签$y_i$</li>
+<li>计算损失和梯度，更新r，再根据r和梯度更新模型参数<br> $\hat{g}\leftarrow+\frac{1}{m}\nabla_{\theta}\sum_{i}L(f(x_i;\theta),y_i)$<br> $r\leftarrow\rho r+(1-\rho)\hat{g}\bigotimes\hat{g}$<br> $\Delta\theta=-frac{\epsilon}{\delta+\sqrt{r}}\bigotimes\hat{g}$<br> $\theta\leftarrow\theta+\Delta\theta$</li>
+</ol>
+<h4 id="6-2优点"><a href="#6-2优点" class="headerlink" title="6.2优点"></a>6.2优点</h4><p>相比于AdaGrad，这种方法更好的解决了深度学习中过早的结束学习的问题<br>适合处理非平稳目标，对RNN效果很好</p>
+<h4 id="6-3缺点"><a href="#6-3缺点" class="headerlink" title="6.3缺点"></a>6.3缺点</h4><p>引入的新的超参，衰减系数$\rho$<br>依然依赖于全局学习速率</p>
+<hr>
+<h3 id="7-Adam-Adaptive-Moment-Esitimation"><a href="#7-Adam-Adaptive-Moment-Esitimation" class="headerlink" title="7 Adam(Adaptive Moment Esitimation)"></a>7 Adam(Adaptive Moment Esitimation)</h3><p>Adam本质上是带有动量项的RMSProp，它利用梯度的一阶矩估计和二阶矩估计动态调整每个参数的学习率。Adam的优点主要在于经过偏置矫正后，每一次迭代学习率都有个确定范围，使得参数比较平稳。</p>
+<h4 id="7-1具体实现"><a href="#7-1具体实现" class="headerlink" title="7.1具体实现"></a>7.1具体实现</h4><p>需要：步进值$\epsilon$，初始参数$\theta$，数值稳定值$\delta$，一阶动量衰减系数$\rho_1$，二阶动量衰减系数$\rho_2$<br>其中几个取值一般为：$\delta=10^{-8}, \rho_1=0.9, \rho_2=0.999$<br>中间变量：一阶动量s，二阶动量r，都初始化为0<br>迭代过程：</p>
+<ol>
+<li><p>从训练集中随机抽取一批容量为m的样本${x_1,…,x_m}$，以及对应的标签$y_i$</p>
+</li>
+<li><p>计算损失和梯度，更新r和s，在根据r和s以及梯度更新模型参数<br> $g\leftarrow+\frac{1}{m}\nabla_{\theta}\sum_{i}L(f(x_i;\theta),y_i)$<br> $s\leftarrow\rho_1 s + (1-\rho_1)g$<br> $r\leftarrow\rho_2 r + (1-\rho_2)g\bigotimes g$<br> $\hat{s}\leftarrow\frac{s}{1-\rho_1}$<br> $\hat{r}\leftarrow\frac{r}{1-\rho_2}$<br> $\Delta\theta=-\epsilon \frac{\hat{s}}{\sqrt{\hat{r}}+\delta}$<br> $\theta\leftarrow\theta+\Delta\theta$</p>
+</li>
+</ol>
+<h4 id="7-2-优点"><a href="#7-2-优点" class="headerlink" title="7.2 优点"></a>7.2 优点</h4><p>适用于绝大多数情况</p>
+<h4 id="7-3-缺点"><a href="#7-3-缺点" class="headerlink" title="7.3 缺点"></a>7.3 缺点</h4><p>复杂</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢老板打赏<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/img/alipay.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/img/wechat.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -207,57 +299,119 @@ var _hmt = _hmt || [];
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/04/23/深度学习中的优化/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/04/15/理解各种各样的CNN架构/" class="archive-article-date">
-  	<time datetime="2019-04-15T13:27:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-15</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2019/04/15/理解各种各样的CNN架构/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">理解各种各样的CNN架构</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/04/15/理解各种各样的CNN架构/">理解各种各样的CNN架构</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">CNN arch deeplearning</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-前言"><span class="toc-number">1.</span> <span class="toc-text">1.前言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-GD-gradient-descent"><span class="toc-number">2.</span> <span class="toc-text">2.GD(gradient descent)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1具体实现"><span class="toc-number">2.1.</span> <span class="toc-text">2.1具体实现</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2优点"><span class="toc-number">2.2.</span> <span class="toc-text">2.2优点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3缺点"><span class="toc-number">2.3.</span> <span class="toc-text">2.3缺点</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-BGD-batch-gradient-descent"><span class="toc-number">3.</span> <span class="toc-text">3.BGD(batch gradient descent)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1具体实现"><span class="toc-number">3.1.</span> <span class="toc-text">3.1具体实现</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2优点"><span class="toc-number">3.2.</span> <span class="toc-text">3.2优点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-3缺点"><span class="toc-number">3.3.</span> <span class="toc-text">3.3缺点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#补充一句"><span class="toc-number">3.4.</span> <span class="toc-text">补充一句</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-Momentum"><span class="toc-number">4.</span> <span class="toc-text">4.Momentum</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#4-1-具体实现"><span class="toc-number">4.1.</span> <span class="toc-text">4.1 具体实现</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-2特点"><span class="toc-number">4.2.</span> <span class="toc-text">4.2特点</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-AdaGrad"><span class="toc-number">5.</span> <span class="toc-text">5 AdaGrad</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#5-1具体实现"><span class="toc-number">5.1.</span> <span class="toc-text">5.1具体实现</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-2优点"><span class="toc-number">5.2.</span> <span class="toc-text">5.2优点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-3缺点"><span class="toc-number">5.3.</span> <span class="toc-text">5.3缺点</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-RMSProp"><span class="toc-number">6.</span> <span class="toc-text">6.RMSProp</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#6-1具体实现"><span class="toc-number">6.1.</span> <span class="toc-text">6.1具体实现</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-2优点"><span class="toc-number">6.2.</span> <span class="toc-text">6.2优点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-3缺点"><span class="toc-number">6.3.</span> <span class="toc-text">6.3缺点</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-Adam-Adaptive-Moment-Esitimation"><span class="toc-number">7.</span> <span class="toc-text">7 Adam(Adaptive Moment Esitimation)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#7-1具体实现"><span class="toc-number">7.1.</span> <span class="toc-text">7.1具体实现</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#7-2-优点"><span class="toc-number">7.2.</span> <span class="toc-text">7.2 优点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#7-3-缺点"><span class="toc-number">7.3.</span> <span class="toc-text">7.3 缺点</span></a></li></ol></li></ol>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+        
+    </div>
+</aside>
+
+
+
   
   
-    </div></section>
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -287,8 +441,8 @@ var _hmt = _hmt || [];
 	var yiliaConfig = {
 		mathjax: [object Object],
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

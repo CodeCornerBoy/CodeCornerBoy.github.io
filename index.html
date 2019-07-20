@@ -168,6 +168,137 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-深度学习中的优化" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/04/23/深度学习中的优化/">深度学习中的优化</a>
+    </h1>
+  
+
+        
+        <a href="/2019/04/23/深度学习中的优化/" class="archive-article-date">
+  	<time datetime="2019-04-23T15:06:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-23</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="1-前言"><a href="#1-前言" class="headerlink" title="1.前言"></a>1.前言</h3><p>针对深度学习中不同的优化问题和应用场景，研究人员提出了多种不同的求解算法。在众多优化算法中，有几个经典常用的优化值得被牢记，主要是几个一阶的梯度的算法，包括<strong>GD，SGD，Momentum，AdaGrad，RMSProp，Adam</strong>。其中SGD，Momentum是需要事先人工设置学习率，而AdaGrad，RMSProp，Adam是自动调节学习率的。</p>
+<hr>
+<h3 id="2-GD-gradient-descent"><a href="#2-GD-gradient-descent" class="headerlink" title="2.GD(gradient descent)"></a>2.GD(gradient descent)</h3><p>BGD在训练中，每次迭代需要使用训练集中的所有样本，也就是说利用现有参数对训练集中的所有样本的输入生成一个估计$\hat{y}_i$，然后根据实际的$y_i$作差求出平均值并以此来更新参数。</p>
+<h4 id="2-1具体实现"><a href="#2-1具体实现" class="headerlink" title="2.1具体实现"></a>2.1具体实现</h4><p>需要：学习速率$\epsilon$，初始参数$\theta$<br>迭代过程：</p>
+<ol>
+<li><p>提取训练集中所有特征${x_1,…,x_n}$，以及对应的标签$y_i$</p>
+</li>
+<li><p>计算梯度和误差并更新参数：</p>
+<p>​    $\hat{g}\leftarrow+\frac{1}{n}\nabla_{\theta}\sum_{i}L(f(x_i;\theta),y_i)$<br>​    $\theta\leftarrow\theta-\epsilon\hat{g}$</p>
+</li>
+</ol>
+<h4 id="2-2优点"><a href="#2-2优点" class="headerlink" title="2.2优点"></a>2.2优点</h4><p>由于每一步迭代使用了全部样本，因此当损失函数收敛过程比较稳定</p>
+<h4 id="2-3缺点"><a href="#2-3缺点" class="headerlink" title="2.3缺点"></a>2.3缺点</h4><p>也是由于每次迭代使用所有样本，因此随着数据集的增大，运行速度会越来越慢</p>
+<hr>
+<h3 id="3-BGD-batch-gradient-descent"><a href="#3-BGD-batch-gradient-descent" class="headerlink" title="3.BGD(batch gradient descent)"></a>3.BGD(batch gradient descent)</h3><p>批量梯度下降，即每次迭代随机抽取一批样本（全体样本的一个子集）来更新参数</p>
+<h4 id="3-1具体实现"><a href="#3-1具体实现" class="headerlink" title="3.1具体实现"></a>3.1具体实现</h4><p>需要：学习速率$\epsilon$，初始参数$\theta$<br>每次迭代过程：</p>
+<ol>
+<li>从训练集中随机抽取一批样本${x_1,…,x_m}$(其中m&lt;n),以及对应的标签$y_i$</li>
+<li>计算损失的梯度并跟新参数：<br> $\hat{g}\leftarrow+\frac{1}{m}\nabla_{\theta}\sum_{i}L(f(x_i;\theta),y_i)$<br> $\theta\leftarrow\theta-\epsilon\hat{g}$<h4 id="3-2优点"><a href="#3-2优点" class="headerlink" title="3.2优点"></a>3.2优点</h4>由于每次迭代不是使用全样本，因此训练速度快，对于很大的数据集也能以较快的速度收敛<h4 id="3-3缺点"><a href="#3-3缺点" class="headerlink" title="3.3缺点"></a>3.3缺点</h4>由于每次是随机抽取一小批样本，因此损失无法表征全局的损失趋势，计算得到的梯度也有误差<h4 id="补充一句"><a href="#补充一句" class="headerlink" title="补充一句"></a>补充一句</h4>当BGD每次仅抽取的一小批样本仅含有一个时，此时就是随机梯度下降（SGD），SGD的优点是计算速度快，缺点是损失函数曲线可能不稳定，需要更多个epoch才能收敛</li>
+</ol>
+<h3 id="4-Momentum"><a href="#4-Momentum" class="headerlink" title="4.Momentum"></a>4.Momentum</h3><p>SGD存在的问题是，当每次迭代计算梯度的时候会含有很大噪声，而Momentum方法可以较好的缓解这个问题，尤其是在面对小而连续的梯度但含有很多噪声的时候，可以更好地加快收敛。Momentum借鉴了物理学动量的概念，即前几次的梯度也会参与到本次迭代。为了表示动量，引入一个新的变量$\nu$,$\nu$是历史梯度的累加和，但是每次都会有一定衰减</p>
+<h4 id="4-1-具体实现"><a href="#4-1-具体实现" class="headerlink" title="4.1 具体实现"></a>4.1 具体实现</h4><p>需要：学习速率$\epsilon$，初始参数$\theta$，初始速率$nu$，动量衰减参数$\alpha$<br>迭代过程：</p>
+<ol>
+<li>从训练集中随机抽取一批容量为m的样本${x_1,…,x_m}$，以及对应的标签$y_i$</li>
+<li>计算损失和梯度，并更新速度$nu$，和参数$\theta$<br> $\hat{g}\leftarrow+\frac{1}{m}\nabla_{\theta}\sum_{i}L(f(x_i;\theta),y_i)$<br> $\nu\leftarrow\alpha\nu-\epsilon\hat{g}$<br> $\theta\leftarrow\theta-\epsilon\hat{g}$<br>其中参数$\alpha$表示每回合速率v的衰减程度.同时也可以推断得到,如果每次迭代得到的梯度都是g,那么最后得到的$\nu$的稳定值为$\frac{\epsilon||g||}{1-\alpha}$</li>
+</ol>
+<h4 id="4-2特点"><a href="#4-2特点" class="headerlink" title="4.2特点"></a>4.2特点</h4><p>前后梯度一致的时候能够加速学习<br>前后梯度不一致的时候能够抑制震荡，越过局部极小值</p>
+<hr>
+<h3 id="5-AdaGrad"><a href="#5-AdaGrad" class="headerlink" title="5 AdaGrad"></a>5 AdaGrad</h3><p>AdaGrad是一种可以自动改变学习速率的优化算法，只需设定一个全局学习速率$\epsilon$，每次迭代使用的学习速率是与历史梯度有关</p>
+<h4 id="5-1具体实现"><a href="#5-1具体实现" class="headerlink" title="5.1具体实现"></a>5.1具体实现</h4><p>需要：全局学习速率$\epsilon$,初始参数$\theta$，一个很小的大于0的数值稳定量$\delta$<br>中间变量：梯度累计量r<br>迭代过程：</p>
+<ol>
+<li><p>从训练集中随机抽取一批容量为m的样本${x_1,…,x_m}$，以及对应的标签$y_i$</p>
+</li>
+<li><p>计算损失和梯度，更新r，在根据r和梯度更新参数<br> $\hat{g}\leftarrow+\frac{1}{m}\nabla_{\theta}\sum_{i}L(f(x_i;\theta),y_i)$<br> $r\leftarrow r+\hat{g}\bigotimes\hat{g}$<br> $\Delta\theta=-\frac{\epsilon}{\delta+\sqrt{r}}\bigotimes\hat{g}$<br> $\theta\leftarrow\theta+\Delta\theta$</p>
+</li>
+</ol>
+<h4 id="5-2优点"><a href="#5-2优点" class="headerlink" title="5.2优点"></a>5.2优点</h4><p>能够实现学习速率的自动更改，如果本次梯度大，那么学习速率衰减的就快一些，如果本次梯度小，那么学习速率就衰减的慢一下。</p>
+<h4 id="5-3缺点"><a href="#5-3缺点" class="headerlink" title="5.3缺点"></a>5.3缺点</h4><p>依旧需要设置一个全局的学习率$\epsilon$<br>经验表明，在普通算法中或许效果不错，但是在深度学习中，深度过深时会造成训练提前结束</p>
+<hr>
+<h3 id="6-RMSProp"><a href="#6-RMSProp" class="headerlink" title="6.RMSProp"></a>6.RMSProp</h3><p>RMSProp通过引入一个衰减系数，让r每次都以一定的比例衰减，类似于Momentum中的做法</p>
+<h4 id="6-1具体实现"><a href="#6-1具体实现" class="headerlink" title="6.1具体实现"></a>6.1具体实现</h4><p>需要：全局学习速率$\epsilon$，初始参数$\theta$,一个很小的大于0的数值稳定量$\delta$，衰减速率$\rho$<br>迭代过程：</p>
+<ol>
+<li>从训练集中随机抽取一批容量为m的样本${x_1,…,x_m}$，以及对应的标签$y_i$</li>
+<li>计算损失和梯度，更新r，再根据r和梯度更新模型参数<br> $\hat{g}\leftarrow+\frac{1}{m}\nabla_{\theta}\sum_{i}L(f(x_i;\theta),y_i)$<br> $r\leftarrow\rho r+(1-\rho)\hat{g}\bigotimes\hat{g}$<br> $\Delta\theta=-frac{\epsilon}{\delta+\sqrt{r}}\bigotimes\hat{g}$<br> $\theta\leftarrow\theta+\Delta\theta$</li>
+</ol>
+<h4 id="6-2优点"><a href="#6-2优点" class="headerlink" title="6.2优点"></a>6.2优点</h4><p>相比于AdaGrad，这种方法更好的解决了深度学习中过早的结束学习的问题<br>适合处理非平稳目标，对RNN效果很好</p>
+<h4 id="6-3缺点"><a href="#6-3缺点" class="headerlink" title="6.3缺点"></a>6.3缺点</h4><p>引入的新的超参，衰减系数$\rho$<br>依然依赖于全局学习速率</p>
+<hr>
+<h3 id="7-Adam-Adaptive-Moment-Esitimation"><a href="#7-Adam-Adaptive-Moment-Esitimation" class="headerlink" title="7 Adam(Adaptive Moment Esitimation)"></a>7 Adam(Adaptive Moment Esitimation)</h3><p>Adam本质上是带有动量项的RMSProp，它利用梯度的一阶矩估计和二阶矩估计动态调整每个参数的学习率。Adam的优点主要在于经过偏置矫正后，每一次迭代学习率都有个确定范围，使得参数比较平稳。</p>
+<h4 id="7-1具体实现"><a href="#7-1具体实现" class="headerlink" title="7.1具体实现"></a>7.1具体实现</h4><p>需要：步进值$\epsilon$，初始参数$\theta$，数值稳定值$\delta$，一阶动量衰减系数$\rho_1$，二阶动量衰减系数$\rho_2$<br>其中几个取值一般为：$\delta=10^{-8}, \rho_1=0.9, \rho_2=0.999$<br>中间变量：一阶动量s，二阶动量r，都初始化为0<br>迭代过程：</p>
+<ol>
+<li><p>从训练集中随机抽取一批容量为m的样本${x_1,…,x_m}$，以及对应的标签$y_i$</p>
+</li>
+<li><p>计算损失和梯度，更新r和s，在根据r和s以及梯度更新模型参数<br> $g\leftarrow+\frac{1}{m}\nabla_{\theta}\sum_{i}L(f(x_i;\theta),y_i)$<br> $s\leftarrow\rho_1 s + (1-\rho_1)g$<br> $r\leftarrow\rho_2 r + (1-\rho_2)g\bigotimes g$<br> $\hat{s}\leftarrow\frac{s}{1-\rho_1}$<br> $\hat{r}\leftarrow\frac{r}{1-\rho_2}$<br> $\Delta\theta=-\epsilon \frac{\hat{s}}{\sqrt{\hat{r}}+\delta}$<br> $\theta\leftarrow\theta+\Delta\theta$</p>
+</li>
+</ol>
+<h4 id="7-2-优点"><a href="#7-2-优点" class="headerlink" title="7.2 优点"></a>7.2 优点</h4><p>适用于绝大多数情况</p>
+<h4 id="7-3-缺点"><a href="#7-3-缺点" class="headerlink" title="7.3 缺点"></a>7.3 缺点</h4><p>复杂</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">optimizer deeplearning</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/04/23/深度学习中的优化/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-理解各种各样的CNN架构" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -202,7 +333,7 @@ var _hmt = _hmt || [];
 <p>特征提取不能根据图像及其标签进行调整。如果选择的特征缺乏一定的代表性来区分各个类别，模型的准确度就会大打折扣，而无论采取什么样的分类策略。</p>
 <p>采用传统的流程，目前的一个比较好的方法是使用多种特征提取器，然后组合他们得到一种更好的特征（组合特征）。</p>
 <p>但是这需要很多<code>启发式规则</code>和人力来根据领域的不同来调整参数，使得达到一个很好的准确度，这里说的是要接近人类的水平。</p>
-<p>这也就是说，为什么采用传统的计算机视觉技术需要花费很多年时间才能打造出一个好的计算机视觉系统（例如：OCR、人脸验证、图像识别、物体检测），浙西系统在实际应用中可以处理各种数据。</p>
+<p>这也就是说，为什么采用传统的计算机视觉技术需要花费很多年时间才能打造出一个好的计算机视觉系统（例如：OCR、人脸验证、图像识别、物体检测），这些系统在实际应用中可以处理各种数据。</p>
 <p>有一次，我们用了6周时间为一家公司打造了一个CNN模型，其效果更好，如果采用传统的计算机视觉技术要达到同样效果则要花费一年时间。</p>
 <p><strong>传统流程的另一个问题是：</strong></p>
 <p>它与人类识别学习物体的过程是完全不一样的。人自出生之初，一个孩子就可以感知周围环境，随着他的成长，他接触的数据更多，从而学会了识别物体。</p>
@@ -558,6 +689,10 @@ MathJax.Hub.Queue(function() {
             <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
           </label>
           <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">optimizer deeplearning</a>
+              </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">CNN arch deeplearning</a>
