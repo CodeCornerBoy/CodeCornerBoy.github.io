@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="1.前言针对深度学习中不同的优化问题和应用场景，研究人员提出了多种不同的求解算法。在众多优化算法中，有几个经典常用的优化值得被牢记，主要是几个一阶的梯度的算法，包括GD，SGD，Momentum，AdaGrad，RMSProp，Adam。其中SGD，Momentum是需要事先人工设置学习率，而AdaGrad，RMSProp，Adam是自动调节学习率的。  2.GD(gradient descent">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-07-20T08:14:14.999Z">
+<meta property="og:updated_time" content="2019-07-20T08:33:42.704Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="深度学习中的优化">
 <meta name="twitter:description" content="1.前言针对深度学习中不同的优化问题和应用场景，研究人员提出了多种不同的求解算法。在众多优化算法中，有几个经典常用的优化值得被牢记，主要是几个一阶的梯度的算法，包括GD，SGD，Momentum，AdaGrad，RMSProp，Adam。其中SGD，Momentum是需要事先人工设置学习率，而AdaGrad，RMSProp，Adam是自动调节学习率的。  2.GD(gradient descent">
@@ -196,14 +196,9 @@ var _hmt = _hmt || [];
 <h3 id="2-GD-gradient-descent"><a href="#2-GD-gradient-descent" class="headerlink" title="2.GD(gradient descent)"></a>2.GD(gradient descent)</h3><p>BGD在训练中，每次迭代需要使用训练集中的所有样本，也就是说利用现有参数对训练集中的所有样本的输入生成一个估计$\hat{y}_i$，然后根据实际的$y_i$作差求出平均值并以此来更新参数。</p>
 <h4 id="2-1具体实现"><a href="#2-1具体实现" class="headerlink" title="2.1具体实现"></a>2.1具体实现</h4><p>需要：学习速率$\epsilon$，初始参数$\theta$<br>迭代过程：</p>
 <ol>
-<li><p>提取训练集中所有特征${x_1,…,x_n}$，以及对应的标签$y_i$</p>
-</li>
-<li><p>计算梯度和误差并更新参数：</p>
-<p>​    $\hat{g}\leftarrow+\frac{1}{n}\nabla_{\theta}\sum_{i}L(f(x_i;\theta),y_i)$<br>​    $\theta\leftarrow\theta-\epsilon\hat{g}$</p>
-</li>
+<li>提取训练集中所有特征${x_1,…,x_n}$，以及对应的标签$y_i$</li>
+<li>计算梯度和误差并更新参数：<br>​    $\hat{g}\leftarrow+\frac{1}{n}\nabla_{\theta}\sum_{i}L(f(x_i;\theta),y_i)$<br>​    $\theta\leftarrow\theta-\epsilon\hat{g}$<h4 id="2-2优点"><a href="#2-2优点" class="headerlink" title="2.2优点"></a>2.2优点</h4>由于每一步迭代使用了全部样本，因此当损失函数收敛过程比较稳定<h4 id="2-3缺点"><a href="#2-3缺点" class="headerlink" title="2.3缺点"></a>2.3缺点</h4>也是由于每次迭代使用所有样本，因此随着数据集的增大，运行速度会越来越慢</li>
 </ol>
-<h4 id="2-2优点"><a href="#2-2优点" class="headerlink" title="2.2优点"></a>2.2优点</h4><p>由于每一步迭代使用了全部样本，因此当损失函数收敛过程比较稳定</p>
-<h4 id="2-3缺点"><a href="#2-3缺点" class="headerlink" title="2.3缺点"></a>2.3缺点</h4><p>也是由于每次迭代使用所有样本，因此随着数据集的增大，运行速度会越来越慢</p>
 <hr>
 <h3 id="3-BGD-batch-gradient-descent"><a href="#3-BGD-batch-gradient-descent" class="headerlink" title="3.BGD(batch gradient descent)"></a>3.BGD(batch gradient descent)</h3><p>批量梯度下降，即每次迭代随机抽取一批样本（全体样本的一个子集）来更新参数</p>
 <h4 id="3-1具体实现"><a href="#3-1具体实现" class="headerlink" title="3.1具体实现"></a>3.1具体实现</h4><p>需要：学习速率$\epsilon$，初始参数$\theta$<br>每次迭代过程：</p>
@@ -215,40 +210,29 @@ var _hmt = _hmt || [];
 <h4 id="4-1-具体实现"><a href="#4-1-具体实现" class="headerlink" title="4.1 具体实现"></a>4.1 具体实现</h4><p>需要：学习速率$\epsilon$，初始参数$\theta$，初始速率$nu$，动量衰减参数$\alpha$<br>迭代过程：</p>
 <ol>
 <li>从训练集中随机抽取一批容量为m的样本${x_1,…,x_m}$，以及对应的标签$y_i$</li>
-<li>计算损失和梯度，并更新速度$nu$，和参数$\theta$<br> $\hat{g}\leftarrow+\frac{1}{m}\nabla_{\theta}\sum_{i}L(f(x_i;\theta),y_i)$<br> $\nu\leftarrow\alpha\nu-\epsilon\hat{g}$<br> $\theta\leftarrow\theta-\epsilon\hat{g}$<br>其中参数$\alpha$表示每回合速率v的衰减程度.同时也可以推断得到,如果每次迭代得到的梯度都是g,那么最后得到的$\nu$的稳定值为$\frac{\epsilon||g||}{1-\alpha}$</li>
+<li>计算损失和梯度，并更新速度$nu$，和参数$\theta$<br> $\hat{g}\leftarrow+\frac{1}{m}\nabla_{\theta}\sum_{i}L(f(x_i;\theta),y_i)$<br> $\nu\leftarrow\alpha\nu-\epsilon\hat{g}$<br> $\theta\leftarrow\theta-\epsilon\hat{g}$<br>其中参数$\alpha$表示每回合速率v的衰减程度.同时也可以推断得到,如果每次迭代得到的梯度都是g,那么最后得到的$\nu$的稳定值为$\frac{\epsilon||g||}{1-\alpha}$<h4 id="4-2特点"><a href="#4-2特点" class="headerlink" title="4.2特点"></a>4.2特点</h4>前后梯度一致的时候能够加速学习<br>前后梯度不一致的时候能够抑制震荡，越过局部极小值</li>
 </ol>
-<h4 id="4-2特点"><a href="#4-2特点" class="headerlink" title="4.2特点"></a>4.2特点</h4><p>前后梯度一致的时候能够加速学习<br>前后梯度不一致的时候能够抑制震荡，越过局部极小值</p>
 <hr>
 <h3 id="5-AdaGrad"><a href="#5-AdaGrad" class="headerlink" title="5 AdaGrad"></a>5 AdaGrad</h3><p>AdaGrad是一种可以自动改变学习速率的优化算法，只需设定一个全局学习速率$\epsilon$，每次迭代使用的学习速率是与历史梯度有关</p>
 <h4 id="5-1具体实现"><a href="#5-1具体实现" class="headerlink" title="5.1具体实现"></a>5.1具体实现</h4><p>需要：全局学习速率$\epsilon$,初始参数$\theta$，一个很小的大于0的数值稳定量$\delta$<br>中间变量：梯度累计量r<br>迭代过程：</p>
 <ol>
-<li><p>从训练集中随机抽取一批容量为m的样本${x_1,…,x_m}$，以及对应的标签$y_i$</p>
-</li>
-<li><p>计算损失和梯度，更新r，在根据r和梯度更新参数<br> $\hat{g}\leftarrow+\frac{1}{m}\nabla_{\theta}\sum_{i}L(f(x_i;\theta),y_i)$<br> $r\leftarrow r+\hat{g}\bigotimes\hat{g}$<br> $\Delta\theta=-\frac{\epsilon}{\delta+\sqrt{r}}\bigotimes\hat{g}$<br> $\theta\leftarrow\theta+\Delta\theta$</p>
-</li>
+<li>从训练集中随机抽取一批容量为m的样本${x_1,…,x_m}$，以及对应的标签$y_i$</li>
+<li>计算损失和梯度，更新r，在根据r和梯度更新参数<br> $\hat{g}\leftarrow+\frac{1}{m}\nabla_{\theta}\sum_{i}L(f(x_i;\theta),y_i)$<br> $r\leftarrow r+\hat{g}\bigotimes\hat{g}$<br> $\Delta\theta=-\frac{\epsilon}{\delta+\sqrt{r}}\bigotimes\hat{g}$<br> $\theta\leftarrow\theta+\Delta\theta$<h4 id="5-2优点"><a href="#5-2优点" class="headerlink" title="5.2优点"></a>5.2优点</h4>能够实现学习速率的自动更改，如果本次梯度大，那么学习速率衰减的就快一些，如果本次梯度小，那么学习速率就衰减的慢一下。<h4 id="5-3缺点"><a href="#5-3缺点" class="headerlink" title="5.3缺点"></a>5.3缺点</h4>依旧需要设置一个全局的学习率$\epsilon$<br>经验表明，在普通算法中或许效果不错，但是在深度学习中，深度过深时会造成训练提前结束</li>
 </ol>
-<h4 id="5-2优点"><a href="#5-2优点" class="headerlink" title="5.2优点"></a>5.2优点</h4><p>能够实现学习速率的自动更改，如果本次梯度大，那么学习速率衰减的就快一些，如果本次梯度小，那么学习速率就衰减的慢一下。</p>
-<h4 id="5-3缺点"><a href="#5-3缺点" class="headerlink" title="5.3缺点"></a>5.3缺点</h4><p>依旧需要设置一个全局的学习率$\epsilon$<br>经验表明，在普通算法中或许效果不错，但是在深度学习中，深度过深时会造成训练提前结束</p>
 <hr>
 <h3 id="6-RMSProp"><a href="#6-RMSProp" class="headerlink" title="6.RMSProp"></a>6.RMSProp</h3><p>RMSProp通过引入一个衰减系数，让r每次都以一定的比例衰减，类似于Momentum中的做法</p>
 <h4 id="6-1具体实现"><a href="#6-1具体实现" class="headerlink" title="6.1具体实现"></a>6.1具体实现</h4><p>需要：全局学习速率$\epsilon$，初始参数$\theta$,一个很小的大于0的数值稳定量$\delta$，衰减速率$\rho$<br>迭代过程：</p>
 <ol>
 <li>从训练集中随机抽取一批容量为m的样本${x_1,…,x_m}$，以及对应的标签$y_i$</li>
-<li>计算损失和梯度，更新r，再根据r和梯度更新模型参数<br> $\hat{g}\leftarrow+\frac{1}{m}\nabla_{\theta}\sum_{i}L(f(x_i;\theta),y_i)$<br> $r\leftarrow\rho r+(1-\rho)\hat{g}\bigotimes\hat{g}$<br> $\Delta\theta=-frac{\epsilon}{\delta+\sqrt{r}}\bigotimes\hat{g}$<br> $\theta\leftarrow\theta+\Delta\theta$</li>
+<li>计算损失和梯度，更新r，再根据r和梯度更新模型参数<br> $\hat{g}\leftarrow+\frac{1}{m}\nabla_{\theta}\sum_{i}L(f(x_i;\theta),y_i)$<br> $r\leftarrow\rho r+(1-\rho)\hat{g}\bigotimes\hat{g}$<br> $\Delta\theta=-frac{\epsilon}{\delta+\sqrt{r}}\bigotimes\hat{g}$<br> $\theta\leftarrow\theta+\Delta\theta$<h4 id="6-2优点"><a href="#6-2优点" class="headerlink" title="6.2优点"></a>6.2优点</h4>相比于AdaGrad，这种方法更好的解决了深度学习中过早的结束学习的问题<br>适合处理非平稳目标，对RNN效果很好<h4 id="6-3缺点"><a href="#6-3缺点" class="headerlink" title="6.3缺点"></a>6.3缺点</h4>引入的新的超参，衰减系数$\rho$<br>依然依赖于全局学习速率</li>
 </ol>
-<h4 id="6-2优点"><a href="#6-2优点" class="headerlink" title="6.2优点"></a>6.2优点</h4><p>相比于AdaGrad，这种方法更好的解决了深度学习中过早的结束学习的问题<br>适合处理非平稳目标，对RNN效果很好</p>
-<h4 id="6-3缺点"><a href="#6-3缺点" class="headerlink" title="6.3缺点"></a>6.3缺点</h4><p>引入的新的超参，衰减系数$\rho$<br>依然依赖于全局学习速率</p>
 <hr>
 <h3 id="7-Adam-Adaptive-Moment-Esitimation"><a href="#7-Adam-Adaptive-Moment-Esitimation" class="headerlink" title="7 Adam(Adaptive Moment Esitimation)"></a>7 Adam(Adaptive Moment Esitimation)</h3><p>Adam本质上是带有动量项的RMSProp，它利用梯度的一阶矩估计和二阶矩估计动态调整每个参数的学习率。Adam的优点主要在于经过偏置矫正后，每一次迭代学习率都有个确定范围，使得参数比较平稳。</p>
 <h4 id="7-1具体实现"><a href="#7-1具体实现" class="headerlink" title="7.1具体实现"></a>7.1具体实现</h4><p>需要：步进值$\epsilon$，初始参数$\theta$，数值稳定值$\delta$，一阶动量衰减系数$\rho_1$，二阶动量衰减系数$\rho_2$<br>其中几个取值一般为：$\delta=10^{-8}, \rho_1=0.9, \rho_2=0.999$<br>中间变量：一阶动量s，二阶动量r，都初始化为0<br>迭代过程：</p>
 <ol>
-<li><p>从训练集中随机抽取一批容量为m的样本${x_1,…,x_m}$，以及对应的标签$y_i$</p>
-</li>
-<li><p>计算损失和梯度，更新r和s，在根据r和s以及梯度更新模型参数<br> $g\leftarrow+\frac{1}{m}\nabla_{\theta}\sum_{i}L(f(x_i;\theta),y_i)$<br> $s\leftarrow\rho_1 s + (1-\rho_1)g$<br> $r\leftarrow\rho_2 r + (1-\rho_2)g\bigotimes g$<br> $\hat{s}\leftarrow\frac{s}{1-\rho_1}$<br> $\hat{r}\leftarrow\frac{r}{1-\rho_2}$<br> $\Delta\theta=-\epsilon \frac{\hat{s}}{\sqrt{\hat{r}}+\delta}$<br> $\theta\leftarrow\theta+\Delta\theta$</p>
-</li>
+<li>从训练集中随机抽取一批容量为m的样本${x_1,…,x_m}$，以及对应的标签$y_i$</li>
+<li>计算损失和梯度，更新r和s，在根据r和s以及梯度更新模型参数<br> $g\leftarrow+\frac{1}{m}\nabla_{\theta}\sum_{i}L(f(x_i;\theta),y_i)$<br> $s\leftarrow\rho_1 s + (1-\rho_1)g$<br> $r\leftarrow\rho_2 r + (1-\rho_2)g\bigotimes g$<br> $\hat{s}\leftarrow\frac{s}{1-\rho_1}$<br> $\hat{r}\leftarrow\frac{r}{1-\rho_2}$<br> $\Delta\theta=-\epsilon \frac{\hat{s}}{\sqrt{\hat{r}}+\delta}$<br> $\theta\leftarrow\theta+\Delta\theta$<h4 id="7-2-优点"><a href="#7-2-优点" class="headerlink" title="7.2 优点"></a>7.2 优点</h4>适用于绝大多数情况<h4 id="7-3-缺点"><a href="#7-3-缺点" class="headerlink" title="7.3 缺点"></a>7.3 缺点</h4>复杂</li>
 </ol>
-<h4 id="7-2-优点"><a href="#7-2-优点" class="headerlink" title="7.2 优点"></a>7.2 优点</h4><p>适用于绝大多数情况</p>
-<h4 id="7-3-缺点"><a href="#7-3-缺点" class="headerlink" title="7.3 缺点"></a>7.3 缺点</h4><p>复杂</p>
 
       
 
