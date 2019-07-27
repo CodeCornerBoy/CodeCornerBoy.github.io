@@ -6,15 +6,29 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Tag: CNN arch deeplearning | Hexo</title>
+  <title>浅谈目标检测——RCNN系列 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/tags/CNN-arch-deeplearning/index.html">
+  <meta name="description" content="目标检测概述对于计算机视觉领域里有三类比较经典的视觉任务：即图像分类，图像检测和图像分割。图像分类任务里面，我们假设图像里只有一个主体目标，并关注如何识别该目标的类别。然而，大多数情况下，我们不仅想知道图像中目标的类别，还想知道目标在图像中的位置，我们将这类任务称之为目标检测(object detection)，通俗来讲目标检测定义了一个classification和localization两个子">
+<meta name="keywords" content="目标检测 RCNN Fast-RCNN Faster-RCNN">
+<meta property="og:type" content="article">
+<meta property="og:title" content="浅谈目标检测——RCNN系列">
+<meta property="og:url" content="http://yoursite.com/2019/07/05/浅谈目标检测——RCNN系列/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="目标检测概述对于计算机视觉领域里有三类比较经典的视觉任务：即图像分类，图像检测和图像分割。图像分类任务里面，我们假设图像里只有一个主体目标，并关注如何识别该目标的类别。然而，大多数情况下，我们不仅想知道图像中目标的类别，还想知道目标在图像中的位置，我们将这类任务称之为目标检测(object detection)，通俗来讲目标检测定义了一个classification和localization两个子">
 <meta property="og:locale" content="default">
+<meta property="og:image" content="http://yoursite.com/2019/07/05/浅谈目标检测——RCNN系列/RCNN.PNG">
+<meta property="og:image" content="http://yoursite.com/2019/07/05/浅谈目标检测——RCNN系列/RCNN-1.PNG">
+<meta property="og:image" content="http://yoursite.com/2019/07/05/浅谈目标检测——RCNN系列/Fast1.PNG">
+<meta property="og:image" content="http://yoursite.com/2019/07/05/浅谈目标检测——RCNN系列/Faster0.PNG">
+<meta property="og:image" content="http://yoursite.com/2019/07/05/浅谈目标检测——RCNN系列/RPN.PNG">
+<meta property="og:image" content="http://yoursite.com/2019/07/05/浅谈目标检测——RCNN系列/RPNarch.PNG">
+<meta property="og:image" content="http://yoursite.com/2019/07/05/浅谈目标检测——RCNN系列/RoIPooling.PNG">
+<meta property="og:image" content="http://yoursite.com/2019/07/05/浅谈目标检测——RCNN系列/RoIHead.PNG">
+<meta property="og:updated_time" content="2019-07-27T08:23:48.025Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
+<meta name="twitter:title" content="浅谈目标检测——RCNN系列">
+<meta name="twitter:description" content="目标检测概述对于计算机视觉领域里有三类比较经典的视觉任务：即图像分类，图像检测和图像分割。图像分类任务里面，我们假设图像里只有一个主体目标，并关注如何识别该目标的类别。然而，大多数情况下，我们不仅想知道图像中目标的类别，还想知道目标在图像中的位置，我们将这类任务称之为目标检测(object detection)，通俗来讲目标检测定义了一个classification和localization两个子">
+<meta name="twitter:image" content="http://yoursite.com/2019/07/05/浅谈目标检测——RCNN系列/RCNN.PNG">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -166,60 +180,249 @@ var _hmt = _hmt || [];
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-浅谈目标检测——RCNN系列" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/04/15/理解各种各样的CNN架构/" class="archive-article-date">
-  	<time datetime="2019-04-15T13:27:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-15</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/04/15/理解各种各样的CNN架构/">理解各种各样的CNN架构</a>
+    <h1 class="article-title" itemprop="name">
+      浅谈目标检测——RCNN系列
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2019/07/05/浅谈目标检测——RCNN系列/" class="archive-article-date">
+  	<time datetime="2019-07-05T13:44:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-05</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="目标检测概述"><a href="#目标检测概述" class="headerlink" title="目标检测概述"></a>目标检测概述</h2><p>对于计算机视觉领域里有三类比较经典的视觉任务：即图像分类，图像检测和图像分割。图像分类任务里面，我们假设图像里只有一个主体目标，并关注如何识别该目标的类别。然而，大多数情况下，我们不仅想知道图像中目标的类别，还想知道目标在图像中的位置，我们将这类任务称之为<code>目标检测</code>(object detection)，通俗来讲目标检测定义了一个classification和localization两个子任务的复合任务。<br>当前主流的目标检测算法主要有以one-stage为代表的yolo和ssd，以及two-stage为代表的的RCNN系列。以下对two-stage算法RCNN系列进行介绍说明。</p>
+<h2 id="RCNN"><a href="#RCNN" class="headerlink" title="RCNN"></a>RCNN</h2><p>时间回到2014年，那是深度学习如火如荼发展的第三年，当时Ross Girshick提出了一种使用卷积神经网络来完成目标检测的的算法<a href="http://xueshu.baidu.com/s?wd=paperuri%3A%28f818e23d213da893fc890f5d96ef4cb3%29&amp;filter=sc_long_sign&amp;tn=SE_xueshusource_2kduw22v&amp;sc_vurl=http%3A%2F%2Fwww.arxiv.org%2Fpdf%2F1311.2524.pdf&amp;ie=utf-8&amp;sc_us=13070771409020160963" target="_blank" rel="noopener">RCNN</a>,下面简要说明RCNN的工作原理。<br><img src="/2019/07/05/浅谈目标检测——RCNN系列/RCNN.PNG" alt="RCNN-system overview"><br>简单来说，RCNN工作流程分3步：</p>
+<ol>
+<li>输入一张图片，使用selective search方法在图片上生成~2K个待检测区域。</li>
+<li>在这~2K个待检测区域，每一个待检测区域过一遍CNN网络进行特征提取，将提取到的特征存盘</li>
+<li>对这些特征训练一个SVM进行目标分类，得到目标类别，通过Bounding Box Regression调整目标框的大小<br><img src="/2019/07/05/浅谈目标检测——RCNN系列/RCNN-1.PNG" alt="RCNN-system overview"><br>具体来说，在第一步中，作者采用一个2012年提出的方法叫<a href="https://www.researchgate.net/publication/262270555_Selective_Search_for_Object_Recognition" target="_blank" rel="noopener">selective search</a>,这个方法大概意思是采用传统的图像处理方式，将属于同一个目标的若干块从图像上crop出来作为目标检测的候选区域。在第二步特征提取的时候，作者借用了当时AlexNet成果，在imagenet上预训练好的参数去掉最后面的全连接层仅用于特征提取。第三步对目标识别时，作者单独训练一个SVM用于目标的分类任务，使用Bounding Box Regression完成目标框的回归任务。</li>
+</ol>
+<p>关于RCNN的贡献，我们归结为以下两点：</p>
+<ul>
+<li>首次在目标检测任务中使用卷积神经网络进行特征提取</li>
+<li>使用了bounding box regression进行目标框的修正</li>
+</ul>
+<p>在当时RCNN的横空出世刷新了以往目标检测方案的精度，然而其缺点也是致命的：<br>1）首先测试需要耗时间近49s，~2K个region proposal依次通过CNN网络提特征需要占用47s，selective search做框推荐花费2s多<br>2）庞大的存储开销，在上述第二步中，~2K个候选区依次前向通过CNN得到的特征需要存储到硬盘用于后面SVM分类器的训练<br>3）CNN，SVM，bounding box regression是分别进行训练的</p>
+<h2 id="Fast-RCNN"><a href="#Fast-RCNN" class="headerlink" title="Fast-RCNN"></a>Fast-RCNN</h2><p>针对RCNN的弊端，作者第二年（2015年）提出了一种改进方法<a href="http://xueshu.baidu.com/s?wd=paperuri%3A%28f4e6a2094d1c4853ef562a2c2ed0719c%29&amp;filter=sc_long_sign&amp;tn=SE_xueshusource_2kduw22v&amp;sc_vurl=http%3A%2F%2Farxiv.org%2Fabs%2F1504.08083&amp;ie=utf-8&amp;sc_us=8581523302842466652" target="_blank" rel="noopener">Fast-RCNN</a>,作者认为在RCNN网络中，selective search推荐出的候选区很多都是重叠的，因此没必要将生成的2000个候选区依次通过CNN提取特征，而是将原图输入到CNN完成一次特征提取，在feature map上做region proposal。除此之外，在Fast-RCNN中，目标的分类和目标框的修正统一采用了全连接层FC完成。<br><img src="/2019/07/05/浅谈目标检测——RCNN系列/Fast1.PNG" alt=""><br>总结Fast-RCNN的主要贡献：<br>1）取代RCNN的串行方式提取特征，直接仅一次对原图通过CNN网络进行特征提取<br>2）首次使用RoI polling<br>3）除了selective search其他部分都可以在一起训练。</p>
+<p>Fast_RCNN相对RCNN不论在精度还是速度上都取得了令人瞩目的进步，特别是预测速度方面从RCNN的49秒降到了2.3秒，然而这对于工业界落地依旧存在问题，而这个耗时的主要根源是selective search，如何进一步改良这个问题呢？次年（2016年）何凯明、任少卿和RCNN的原作Ross Girshick做了新地改进尝试，提出了更快的RCNN，即Faster-RCNN。</p>
+<h2 id="Faster-RCNN"><a href="#Faster-RCNN" class="headerlink" title="Faster-RCNN"></a>Faster-RCNN</h2><p>实验数据表明，制约Fast-RCNN预测速度的是selective search，2016年Faster-RCNN在Fast-RCNN基础之上做了新的尝试，通过一个<font color="red">Region Proposal Network(RPN)</font>代替selective search方法来生成待检测区，如此一来，在生成RoI的时候从2s降低到了约10ms，使得Faster-RCNN的预测速度降低到了0.2s，基本达到了“实时效果”。<br><img src="/2019/07/05/浅谈目标检测——RCNN系列/Faster0.PNG" alt=""><br>从上图我们可以看到，Faster-RCNN使用共享的卷积层为原图提feature，然后将feature送入到RPN网络，RPN网络生成一些待检测区（RoI），并对这些区域进行目标和背景的分类，以及第一次框修正。之后就是Fast-RCNN的的结构了，值得注意的是Faster-RCNN真正意义上实现了end-to-end的训练。<br>要理解Faster-RCNN，关键要知道RPN的工作原理：<br><img src="/2019/07/05/浅谈目标检测——RCNN系列/RPN.PNG" alt=""></p>
+<h4 id="RPN网络"><a href="#RPN网络" class="headerlink" title="RPN网络"></a>RPN网络</h4><p>首先原图（假设是800x600），经过CNN网络之后16倍降采样后得到的feature map大小为50x38，RPN在这个feature map上为每一个点生成预先设定好宽高比和大小的anchor，这9种初始anchor包含三种面积（128x128，256x256，512x512），同一种面积宽高比又有（1:1，1:2，2:1）三种，因此RPN生成的初始anchor总共是17100（原文是约20000个，后文统一说20000个）。对于生成的约20000个anchor，RPN要做两件事：<font color="red">①anchor是前景还是背景，即有没有覆盖目标，②为属于前景的anchor进行一次框修正。</font><br>对于问题①，RPN的做法是，排除掉了超越图像边界的anchor，使用softmaxLoss进行直接训练。对于问题②，作者使用smothL1进行训练。那么RPN结构是什么样呢？<br><img src="/2019/07/05/浅谈目标检测——RCNN系列/RPNarch.PNG" alt=""><br>RPN实际上是一个树状结构，树干是featuremap 通过kernelsize=3x3,stride=1,pading=1卷积核完成一次卷积运算（大小不变，输出通道是512维），后分叉为两个1x1的卷积，左边的一支解决了anchor是前景还是背景的问题，右边的一支是对包含前景的anchor做了框修正。<br>可以看出做前景背景分类的卷积输出18个值，为什么是18个值呢？因为feature map上每一个点对应9个anchor，每个anchor都会预测<font color="red">一个前景分数+一个背景分数</font>，因此9x2=18个；而对于框回归的卷积输出了36个值，，因为每个anchor对应<font color="red">4个修正坐标</font>，因此9x4=36个。</p>
+<h4 id="RPN的训练"><a href="#RPN的训练" class="headerlink" title="RPN的训练"></a>RPN的训练</h4><p>话题继续回到RPN训练上，对于一个anchor是前景还是背景，论文作者给出的定义是：如果一个anchor和GT的IOU大于0.7，那么这个anchor就算是包含前景（目标）；如果和GT的IOU小于0.3，则定义为背景，作者在训练RPN的时候只用到了以上两类anchor，对于和GT的IOU介于0.3~0.7的anchor没有使用，值得注意的是，在训练前景背景分类的时候，作者采用的方式是随机抽取128个前景anchor和128个背景anchor。<br>RPN中框修正的训练，作者定义GT的坐标为$GT=[G_x,G_y,G_w,G_h]$，anchor的坐标为$A=[A_x,A_y,A_w,A_h]$,训练框修正，其实就是寻找一种变换<strong>F</strong>,使得$F(A_x,A_y,A_w,A_h)=(G_x^<em>,G_y^</em>,G_w^<em>,G_h^</em>)$，其中$(G_x^<em>,G_y^</em>,G_w^<em>,G_h^</em>)\approx(G_x,G_y,G_w,G_h)$</p>
+<p>即先做平移：</p>
+<script type="math/tex; mode=display">
+\begin{cases}
+G_x^* = A_w · d_x(A)+A_x  \\
+G_y^* = A_h · d_y(A)+A_y
+\end{cases}</script><p>再做缩放</p>
+<script type="math/tex; mode=display">
+\begin{cases}
+G_w^* = A_w · exp(d_w(A)) \\
+G_h^* = A_h · exp(d_w(A))
+\end{cases}</script><p>即我们要训练参数<script type="math/tex">d_*(A)</script>,其中*代表的是x,y,w,h四个下标。如何训练得到这四个参数呢？作者采用SmoothL1进行训练，框回归损失为：$L_{loc}(t^u,\nu)=\sum_{i\in\{x,y,w,h\}} smooth_{L1}(t_i^u-\nu_i)$</p>
+<p>其中</p>
+<script type="math/tex; mode=display">
+smooth_{L1}=
+\begin{cases}
+0.5x^2, & \text{if |x|<1}\\[2ex]
+|x|-0.5， & \text{otherwise}
+\end{cases}</script><p>至此，RPN的训练介绍基本完毕，RPN的损失函数是：</p>
+<script type="math/tex; mode=display">
+L(\{p_i\},\{t_i\})=\frac{1}{N_{cls}}\sum_{i}L_{cls}(p_i,p_i^*)+\lambda\frac{1}{N_reg}\sum_{i}p_i^*L_{reg}(t_i,t_i^*)</script><p>上述公式中，$i$表示了anchor index，$p_i$表示foreground softmax probability，$p_i^<em>$代表对应的GT predict概率（当第i个anchor与GT的IOU&gt;0.7,认为该anchor是foreground，$p_i^</em>$=1；反之若IOU&lt;0.3,认为该anchor是background，$p_i^<em>$=0;至于IOU介于0.3和0.7之间的anchor不参与训练）；$t$代表的predict boundingbox，$t^</em>$代表对应前景anchor对应的GT box。可以发现RPN的loss分两部分：</p>
+<p>1.cls_loss,即rpn_cls_loss层计算的softmax loss，用于分类anchor为前景还是背景的网络训练</p>
+<p>2.reg loss,即rpn_loss_bbox层计算smoothL1 loss，用于bounding box regression网络训练。注意在该loss前乘以了$p_i^*$,相当于只关心前景anchor的回归。</p>
+<h4 id="RoI-Pooling"><a href="#RoI-Pooling" class="headerlink" title="RoI Pooling"></a>RoI Pooling</h4><p>RPN网络输出RoI之后是RoI Pooling层，为什么需要RoI Pooling层，事实上对于RPN输出的每一个RoI的坐标，RoI Pooling都要去从共享卷积层上拿取特征送入到之后的全连接层进行分类和框的进一步修正，为了满足全连接层的输入要求，需将每一个RoI对应的特征进行尺度上的转化。<br><img src="/2019/07/05/浅谈目标检测——RCNN系列/RoIPooling.PNG" alt=""><br>例如上图中feature map上的红黄蓝三个RoI，在RoI Pooling之前是RPN回归的每个RoI的坐标，RoI Pooling之后统一pooling成7x7大小的proposal feature map用于之后的classification和BBox regression。</p>
+<h4 id="Classification-and-Refine-Regression"><a href="#Classification-and-Refine-Regression" class="headerlink" title="Classification and Refine Regression"></a>Classification and Refine Regression</h4><p>经过RoI Pooling之后得到7x7的RoI feature map后，剩下的就是通过全连接层和softmax对RoI进行分类，以及再次对BBox精修。<br><img src="/2019/07/05/浅谈目标检测——RCNN系列/RoIHead.PNG" alt=""><br>图中FC21是因为VOC数据集有20分类，加背景总共21分类。RoI框修正和RPN中的anchor框修正是同样的原理，都是采用SmoothL1 Loss进行训练。需要注意的是RoI框修正仅对前景修正，对于标签为背景的RoI不修正。对于最后的分类和框修正的训练，可以用以下公式描述：</p>
+<script type="math/tex; mode=display">L(p,u,t^u,\nu)=L_{cls}(p,u)+\lambda[u\geq]L_{loc}(t^u,\nu)</script><p>式子中$u\geq1$表示RoI边框修正是针对前景而言的，实验中λ取1</p>
+<h4 id="RoI分类和框回归训练"><a href="#RoI分类和框回归训练" class="headerlink" title="RoI分类和框回归训练"></a>RoI分类和框回归训练</h4><p>1）首先通过RPN生成约20000个anchor</p>
+<p>2）对20000个anchor进行第一次框修正，得到修正后的proposal</p>
+<p>3）对于上述proposal超过图像边界的进行clip，使其不超过边界</p>
+<p>4）忽略掉长和宽太小的proposal</p>
+<p>5）将所有proposal按照前景分数从高到低排序，选取前12000个</p>
+<p>6）使用threshold=0.7的NMS算法去掉重叠的proposal</p>
+<p>7）针对上一步剩下的proposal，选取前2000个进行第二次分类和框修正</p>
+<p>总而言之，Faster-RCNN的训练，一个是RPN的loss，一个是Fast-RCNN的loss，数学描述为：</p>
+<p>$L_{final}=L(\{p_i\},\{t_i\})+L(p,u,t^u,\nu)$</p>
+<h4 id="算法中的三个Creator"><a href="#算法中的三个Creator" class="headerlink" title="算法中的三个Creator"></a>算法中的三个Creator</h4><ul>
+<li>AnchorTargetCreator<br>用于生成训练RPN的训练集。它将20000个anchor选出256（128+128）个anchor进行分类和回归，具体选择如下：<br>①对于每一个anchor，选择出和它IOU最大的anchor作为正样本（前景）<br>②对于剩下的anchor，选择任一和GT的IOU大于0.7的作为正样本（前景），选出128个<br>③随机选择出和GT的IOU小于0.3的anchor作为负样本（背景），选出128个。用这256个样本训练RPN网络</li>
+<li>ProposalTargetCreator<br>用于生成训练Fast-RCNN分类和框修正的训练集。RPN给出的2000个ROI并不都参与训练，而是选取了其中128个RoI进行训练，规则如下：<br>①RoI和GT的IOU大于0.5的选取一些（比如32个）<br>②RoI和GT的IOU小于0的选取一些，（比如128-32=96）个作为负样本</li>
+<li>ProposalCreator<br>在RPN网络中上万个anchor中选择一定数目（2000或300），调整大小和位置生成RoI，用于以Fast R-CNN训练或者测试。<font color="red">其中AnchorTargetCreator和ProposalTargetCreator是为了生成训练的目标，只在训练阶段用到，ProposalCreator是RPN为Fast R-CNN生成RoIs，在训练和测试阶段都会用到。三个共同点在于他们都不需要bp</font>
+
+
+</li>
+</ul>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢老板打赏<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/img/alipay.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/img/wechat.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">CNN arch deeplearning</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">目标检测 RCNN Fast-RCNN Faster-RCNN</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/07/05/浅谈目标检测——RCNN系列/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/2019/04/23/深度学习中的优化/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">深度学习中的优化</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#目标检测概述"><span class="toc-number">1.</span> <span class="toc-text">目标检测概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RCNN"><span class="toc-number">2.</span> <span class="toc-text">RCNN</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Fast-RCNN"><span class="toc-number">3.</span> <span class="toc-text">Fast-RCNN</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Faster-RCNN"><span class="toc-number">4.</span> <span class="toc-text">Faster-RCNN</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#RPN网络"><span class="toc-number">4.0.1.</span> <span class="toc-text">RPN网络</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#RPN的训练"><span class="toc-number">4.0.2.</span> <span class="toc-text">RPN的训练</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#RoI-Pooling"><span class="toc-number">4.0.3.</span> <span class="toc-text">RoI Pooling</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Classification-and-Refine-Regression"><span class="toc-number">4.0.4.</span> <span class="toc-text">Classification and Refine Regression</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#RoI分类和框回归训练"><span class="toc-number">4.0.5.</span> <span class="toc-text">RoI分类和框回归训练</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#算法中的三个Creator"><span class="toc-number">4.0.6.</span> <span class="toc-text">算法中的三个Creator</span></a></li></ol></li></ol></li></ol>
+                    </div>
+                </span>
+            </div>
+        </div>
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -249,9 +452,9 @@ var _hmt = _hmt || [];
 	var yiliaConfig = {
 		mathjax: [object Object],
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
