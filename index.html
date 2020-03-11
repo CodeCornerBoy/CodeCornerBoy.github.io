@@ -174,7 +174,7 @@ var _hmt = _hmt || [];
     <div class="article-entry" itemprop="articleBody">
       
         <hr>
-<p>title: FM算法随笔<br>date: 2019-08-11 22:57:50<br>tags:<br>    CTR预估<br>    FM算法<br>toc: true<br>mathjax: true<br>​—-</p>
+<p>title: FM算法随笔<br>date: 2019-08-11 22:57:50<br>tags:<br> CTR预估<br> FM算法<br>toc: true<br>mathjax: true<br>​—-</p>
 <h1 id="FM算法"><a href="#FM算法" class="headerlink" title="FM算法"></a>FM算法</h1><h3 id="一、产生背景"><a href="#一、产生背景" class="headerlink" title="一、产生背景"></a>一、产生背景</h3><p>传统线性LR模型中，我们假设每个特征都相互独立，如果需要考虑特征之间的交叉组合，则需要人工完成。非线性SVM可以对特征进行kernel映射，然而在特征特别稀疏的场景下，并不能进行很好的训练学习；很多MF模型，例如MF、SVD等，这些模型训练可以学习到特征之间的隐含关系，但基本上都只适用于特定的输入输出场景。在计算广告和推荐系统中，CTR预估是非常重要的一个环节，判断一个商品的是否进行推荐需要根据CTR预估的点击率来进行。</p>
 <p>进行CTR预估时，除了单特征外，往往要对特征进行组合，对于特征组合来说，业界现在通用的做法主要有两大类：FM系列与Tree系列。实际工程中通常是高维稀疏矩，直接特征交叉会导致计算量过大，特征权值更新缓慢。</p>
 <p>FM是在逻辑回归上面衍生出来的，如果对逻辑回归最朴素的特征组合就是二阶笛卡尔乘积，这样暴力组合的问题：</p>
