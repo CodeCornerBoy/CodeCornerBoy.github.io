@@ -171,11 +171,24 @@ var _hmt = _hmt || [];
     <article id="post-FM算法随笔" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/08/17/FM算法随笔/">FM算法随笔</a>
+    </h1>
+  
+
+        
+        <a href="/2019/08/17/FM算法随笔/" class="archive-article-date">
+  	<time datetime="2019-08-17T14:34:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-17</time>
+</a>
+        
+      </header>
+    
     <div class="article-entry" itemprop="articleBody">
       
-        <hr>
-<p>title: FM算法随笔<br>date: 2019-08-11 22:57:50<br>tags:<br> CTR预估<br> FM算法<br>toc: true<br>mathjax: true<br>​—-</p>
-<h1 id="FM算法"><a href="#FM算法" class="headerlink" title="FM算法"></a>FM算法</h1><h3 id="一、产生背景"><a href="#一、产生背景" class="headerlink" title="一、产生背景"></a>一、产生背景</h3><p>传统线性LR模型中，我们假设每个特征都相互独立，如果需要考虑特征之间的交叉组合，则需要人工完成。非线性SVM可以对特征进行kernel映射，然而在特征特别稀疏的场景下，并不能进行很好的训练学习；很多MF模型，例如MF、SVD等，这些模型训练可以学习到特征之间的隐含关系，但基本上都只适用于特定的输入输出场景。在计算广告和推荐系统中，CTR预估是非常重要的一个环节，判断一个商品的是否进行推荐需要根据CTR预估的点击率来进行。</p>
+        <h1 id="FM算法"><a href="#FM算法" class="headerlink" title="FM算法"></a>FM算法</h1><h3 id="一、产生背景"><a href="#一、产生背景" class="headerlink" title="一、产生背景"></a>一、产生背景</h3><p>传统线性LR模型中，我们假设每个特征都相互独立，如果需要考虑特征之间的交叉组合，则需要人工完成。非线性SVM可以对特征进行kernel映射，然而在特征特别稀疏的场景下，并不能进行很好的训练学习；很多MF模型，例如MF、SVD等，这些模型训练可以学习到特征之间的隐含关系，但基本上都只适用于特定的输入输出场景。在计算广告和推荐系统中，CTR预估是非常重要的一个环节，判断一个商品的是否进行推荐需要根据CTR预估的点击率来进行。</p>
 <p>进行CTR预估时，除了单特征外，往往要对特征进行组合，对于特征组合来说，业界现在通用的做法主要有两大类：FM系列与Tree系列。实际工程中通常是高维稀疏矩，直接特征交叉会导致计算量过大，特征权值更新缓慢。</p>
 <p>FM是在逻辑回归上面衍生出来的，如果对逻辑回归最朴素的特征组合就是二阶笛卡尔乘积，这样暴力组合的问题：</p>
 <ul>
@@ -189,7 +202,7 @@ var _hmt = _hmt || [];
 <h3 id="三、FM的求解"><a href="#三、FM的求解" class="headerlink" title="三、FM的求解"></a>三、FM的求解</h3><p>如果仅仅在基础的线性回归模型上引入交叉项：</p>
 <script type="math/tex; mode=display">y = \omega_0+\sum_{i=0}^n \omega_i x_i + \sum_{i=0}^{n-1}\sum_{j=n+1}^n \omega_{ij} x_i x_j</script><p>那么，交叉特征部分的参数$\omega_{ij}$会有$\frac{n(n-1)}{2}$，但是CTR场景下的特征往往很稀疏，即满足$x_i,x_j$不同时为0的情况少之又少，这样在梯度下降时无法保证$\omega_{ij}$得到更新，即无法训练，从另一个维度思考，$x_i,x_j$两个特征的关系不应该仅仅根据训练样本集中简单的观察得到，其必然存在某种隐含联系，因此FM借鉴MF的思想采用策略是：<strong>对每一个特征分量$x_i$引入辅助向量$v_i=(v_{i1},v_{i2},…,v_{ik})$，然后利用$v_{i}v_{j}^{T}$对交叉项系数$\omega_{ij}$进行估计：</strong></p>
 <script type="math/tex; mode=display">\hat{\omega}_{ij} = v_{i}v_{j}^{T}</script><p>这里，为降低FM计算时间复杂度，对$\sum_{i=0}^{n-1}\sum_{j=n+1}^n<v_i,v_j> x_i x_j$进行变换</v_i,v_j></p>
-<p><img src="/2020/03/11/FM算法随笔/gif.gif" alt=""><br>就可以将计算时间复杂度由$O(kn^2)$降低到$O(kn)$</p>
+<p><img src="/2019/08/17/FM算法随笔/gif.gif" alt=""><br>就可以将计算时间复杂度由$O(kn^2)$降低到$O(kn)$</p>
 <h3 id="四、总结"><a href="#四、总结" class="headerlink" title="四、总结"></a>四、总结</h3><p>总的来说，FM通过向量交叉学习的方式来挖掘特征之间的相关性，有以下两点好处：</p>
 <ul>
 <li>.在高度稀疏的条件下能够更好地挖掘数据特征间的相关性，尤其是对于在训练样本中没出现的交叉数据；</li>
@@ -203,11 +216,22 @@ var _hmt = _hmt || [];
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">CTR预估 FM算法模型</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2020/03/11/FM算法随笔/">展开全文 >></a>
+          <a class="article-more-a" href="/2019/08/17/FM算法随笔/">展开全文 >></a>
         </p>
       
 
@@ -804,6 +828,10 @@ MathJax.Hub.Queue(function() {
             <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
           </label>
           <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">CTR预估 FM算法模型</a>
+              </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">optimizer deeplearning</a>
