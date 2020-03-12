@@ -17,7 +17,7 @@
 <meta property="og:description" content="FM算法一、产生背景传统线性LR模型中，我们假设每个特征都相互独立，如果需要考虑特征之间的交叉组合，则需要人工完成。非线性SVM可以对特征进行kernel映射，然而在特征特别稀疏的场景下，并不能进行很好的训练学习；很多MF模型，例如MF、SVD等，这些模型训练可以学习到特征之间的隐含关系，但基本上都只适用于特定的输入输出场景。在计算广告和推荐系统中，CTR预估是非常重要的一个环节，判断一个商品的是">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://yoursite.com/2019/08/17/FM算法随笔/gif.gif">
-<meta property="og:updated_time" content="2020-03-12T01:08:02.522Z">
+<meta property="og:updated_time" content="2020-03-12T13:08:15.952Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="FM算法随笔">
 <meta name="twitter:description" content="FM算法一、产生背景传统线性LR模型中，我们假设每个特征都相互独立，如果需要考虑特征之间的交叉组合，则需要人工完成。非线性SVM可以对特征进行kernel映射，然而在特征特别稀疏的场景下，并不能进行很好的训练学习；很多MF模型，例如MF、SVD等，这些模型训练可以学习到特征之间的隐含关系，但基本上都只适用于特定的输入输出场景。在计算广告和推荐系统中，CTR预估是非常重要的一个环节，判断一个商品的是">
@@ -203,7 +203,7 @@ var _hmt = _hmt || [];
 </ul>
 <h3 id="二、FM算法模型"><a href="#二、FM算法模型" class="headerlink" title="二、FM算法模型"></a>二、FM算法模型</h3><p>一般的线性模型为：</p>
 <script type="math/tex; mode=display">y = \omega_0+\sum_{i=0}^n \omega_i x_i</script><p>对于FM，度为2的因子分解机模型为：</p>
-<script type="math/tex; mode=display">y = \omega_0+\sum_{i=0}^n \omega_i x_i + \sum_{i=0}^{n-1}\sum_{j=n+1}^n<v_i,v_j> x_i x_j</script><p>where $v\in R^{n \times k},<v_i,v_j>$表示两个长度为k的向量点积：$<v_i,v_j>=\sum_{f=1}^{k} v_{i,f}\cdot v_{j,f}$<br>事实上，FM与线性模型相比，只增加了后面的特征组合部分。</v_i,v_j></v_i,v_j></p>
+<script type="math/tex; mode=display">y = \omega_0+\sum_{i=0}^n \omega_i x_i + \sum_{i=0}^{n-1}\sum_{j=n+1}^n<v_i,v_j> x_i x_j</script><p>where $v \in R^{n \times k}$,$<v_i,v_j>$表示两个长度为k的向量点积：$<v_i,v_j> = \sum_{f=1}^{k} v_{i,f}\cdot v_{j,f}$<br>事实上，FM与线性模型相比，只增加了后面的特征组合部分。</v_i,v_j></v_i,v_j></p>
 <h3 id="三、FM的求解"><a href="#三、FM的求解" class="headerlink" title="三、FM的求解"></a>三、FM的求解</h3><p>如果仅仅在基础的线性回归模型上引入交叉项：</p>
 <script type="math/tex; mode=display">y = \omega_0+\sum_{i=0}^n \omega_i x_i + \sum_{i=0}^{n-1}\sum_{j=n+1}^n \omega_{ij} x_i x_j</script><p>那么，交叉特征部分的参数$\omega_{ij}$会有$\frac{n(n-1)}{2}$，但是CTR场景下的特征往往很稀疏，即满足$x_i,x_j$不同时为0的情况少之又少，这样在梯度下降时无法保证$\omega_{ij}$得到更新，即无法训练，从另一个维度思考，$x_i,x_j$两个特征的关系不应该仅仅根据训练样本集中简单的观察得到，其必然存在某种隐含联系，因此FM借鉴MF的思想采用策略是：<strong>对每一个特征分量$x_i$引入辅助向量$v_i=(v_{i1},v_{i2},…,v_{ik})$，然后利用$v_{i}v_{j}^{T}$对交叉项系数$\omega_{ij}$进行估计：</strong></p>
 <script type="math/tex; mode=display">\hat{\omega}_{ij} = v_{i}v_{j}^{T}</script><p>这里，为降低FM计算时间复杂度，对$\sum_{i=0}^{n-1}\sum_{j=n+1}^n<v_i,v_j> x_i x_j$进行变换</v_i,v_j></p>
